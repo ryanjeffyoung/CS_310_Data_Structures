@@ -1,9 +1,9 @@
 /***
- * Dynamic, array-backed data structure which adds
- * elements in natural order and maintains proper
- * capacity for number of elements to store.
- *
- * @author Ryan Young
+ Dynamic, array-backed data structure which adds
+ elements in natural order and maintains proper
+ capacity for number of elements to store.
+
+ @author Ryan Young
  */
 
 import java.util.AbstractList;
@@ -63,7 +63,7 @@ public class SortedArrayList<E extends Comparable<E>> extends AbstractList<E> {
         if (size - 1 < (capacity() * 0.25)) {
             if ( factor < CAP)
                 resize(CAP);
-            else resize((int)0.5 * capacity());
+            else resize((int)factor);
         }
 
         E temp = data[i];
@@ -76,7 +76,7 @@ public class SortedArrayList<E extends Comparable<E>> extends AbstractList<E> {
 
     /***
      * The capacity of the array
-     * @@return max number of items in array
+     * @return max number of items in array
      */
     public int capacity(){
         return data.length;
@@ -87,11 +87,9 @@ public class SortedArrayList<E extends Comparable<E>> extends AbstractList<E> {
      * sets all values to null.
      */
     public void clear(){
-        int n = size;
-        for (int i = 0; i < n ; i++) {
-            data[i] = null;
-            size--;
-        }
+        E[] temp = (E[]) new Comparable[CAP];
+        data = temp;
+        size = 0;
     }
 
     /***
@@ -113,7 +111,6 @@ public class SortedArrayList<E extends Comparable<E>> extends AbstractList<E> {
         return size == 0;
     }
 
-
     /***
      * Size of the data structure
      * @return number of items in array
@@ -122,8 +119,6 @@ public class SortedArrayList<E extends Comparable<E>> extends AbstractList<E> {
     public int size() {
         return size;
     }
-
-
 
     /// UTILITY METHODS
     /***
@@ -149,8 +144,4 @@ public class SortedArrayList<E extends Comparable<E>> extends AbstractList<E> {
         if (i < 0 || i >= n)
             throw new IndexOutOfBoundsException("Illegal index: " + i);
     }
-
-
-
-
 }
