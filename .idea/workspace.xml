@@ -20,10 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ec3d74c2-b92c-45e6-81aa-fcf8c19030bf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/02_Linked_List/src/Driver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/02_Linked_List/src/List.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/02_Linked_List/src/SinglyLinkedList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/02_Linked_List/src/List.java" beforeDir="false" afterPath="$PROJECT_DIR$/02_Linked_List/src/List.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/02_Linked_List/src/SinglyLinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/02_Linked_List/src/SinglyLinkedList.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +78,14 @@
       <option name="presentableId" value="Default" />
       <updated>1599957610750</updated>
     </task>
+    <task id="LOCAL-00001" summary="Initial Commit">
+      <created>1603235355615</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1603235355615</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -92,16 +99,20 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="440" y="94" key="#Project_Structure" timestamp="1599957618620">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="440" y="94" key="#Project_Structure/0.0.1920.1040/1920.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1599957618620" />
-    <state x="430" y="409" key="#com.intellij.ide.util.MemberChooser" timestamp="1599960492232">
-      <screen x="0" y="0" width="1080" height="1880" />
+    <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1603235966445">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="430" y="409" key="#com.intellij.ide.util.MemberChooser/0.0.1080.1880/1080.0.1920.1040/-1920.0.1920.1040@0.0.1080.1880" timestamp="1599960492232" />
-    <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/1920.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1599959275259" />
+    <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/1920.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1603235966445" />
     <state x="320" y="695" key="FileChooserDialogImpl" timestamp="1599961624214">
       <screen x="0" y="0" width="1080" height="1880" />
     </state>
@@ -122,6 +133,10 @@
       <screen x="0" y="0" width="1080" height="1880" />
     </state>
     <state width="1037" height="559" key="GridCell.Tab.0.right/0.0.1080.1880/1080.0.1920.1040/-1920.0.1920.1040@0.0.1080.1880" timestamp="1599961625547" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1603235404682">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1603235404682" />
     <state x="597" y="140" key="new project wizard" timestamp="1603235134684">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
