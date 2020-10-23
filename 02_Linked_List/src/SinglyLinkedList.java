@@ -11,15 +11,15 @@ public class SinglyLinkedList<E> implements List {
      * @param <E>
      */
     private static class Node<E> {
-        private E element;
+        private E datum;
         private Node<E> next;
-        public Node(E e, Node<E> n){
-            element = e;
+        public Node(E d, Node<E> n){
+            datum = d;
             next = n;
         }
 
-        public E getElement(){
-            return element;
+        public E getDatum(){
+            return datum;
         }
         public Node<E> getNext(){
             return next;
@@ -34,6 +34,13 @@ public class SinglyLinkedList<E> implements List {
     private Node<E> tail = null;
     private int size = 0;
 
+    public SinglyLinkedList(){ }
+
+    public SinglyLinkedList(List<E> list){
+        this.add(list);
+    }
+
+
     /***
      * Appends datum to end of list
      * @param datum to be added to list
@@ -41,7 +48,14 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public boolean add(Object datum) {
-        return false;
+        Node<E> newest = new Node(datum, null);
+        if (isEmpty())
+            head = newest;
+        else
+            tail.setNext(newest);
+        tail = newest;
+        size++;
+        return true;
     }
 
     /***
@@ -52,7 +66,10 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public boolean add(List other) {
-        return false;
+        for (int i = 0; i < other.size(); i++){
+            add(other.get(i));
+        }
+        return true;
     }
 
     /***
@@ -62,8 +79,11 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public boolean addFirst(Object datum) {
-
-        return false;
+        head = new Node(datum, head);
+        if (isEmpty())
+            tail = head;
+        size++;
+        return true;
     }
 
     /***
@@ -73,7 +93,18 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public boolean addLast(Object datum) {
-        return false;
+        // create new node with null next pointer
+        Node<E> newNode = new Node(datum, null);
+        // if list empty, make new node head
+        if (isEmpty())
+            head = newNode;
+        // else set new node as next for tail node
+        else
+            tail.setNext(newNode);
+        // set new node as tail
+        tail = newNode;
+        size++;
+        return true;
     }
 
     /***
@@ -81,7 +112,9 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public void clear() {
-
+        size = 0;
+        head = null;
+        tail = null;
     }
 
     /***
@@ -92,7 +125,19 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public int count(Object target) {
-        return 0;
+        int count = 0;
+        // start at head
+        Node<E> curr = this.head;
+        while(curr != null){
+            // check if match target
+            if (((Comparable)target).compareTo((Comparable)curr.getDatum()) == 0){
+                count++;
+            }
+            // update current node
+            curr = curr.getNext();
+        }
+
+        return count;
     }
 
     /***
@@ -102,7 +147,29 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public Object get(int index) {
-        return null;
+        Node<E> curr = head;
+        boolean negIndex = false;
+        // if negative index
+        if (index < 0)
+            negIndex = true;
+        // start from tail
+        if (negIndex) {
+            curr = tail;
+            // reverse list to traverse 'backwards'
+            reverse();
+            // get positive index for for loop
+            index *= -1;
+        }
+        //Traverse list up to node at index
+        for (int i = 0; curr != null && i < index; i++) {
+            curr = curr.getNext();
+        }
+
+        // put list back in proper order
+        if (negIndex) {
+            reverse();
+        }
+        return curr;
     }
 
     /***
@@ -111,7 +178,9 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        if (size == 0)
+            return true;
+        else return false;
     }
 
     /***
@@ -120,8 +189,50 @@ public class SinglyLinkedList<E> implements List {
      * @return element removed
      */
     @Override
-    public Object remove(int index) {
-        return null;
+    public Object remove(int index){
+       Node<E> curr = head;
+       Node<E> prev = null;
+
+        boolean negIndex = false;
+        // if negative index
+        if (index < 0)
+            negIndex = true;
+        // start from tail
+        if (negIndex) {
+            curr = tail;
+            // reverse list to traverse 'backwards'
+            reverse();
+            // get positive index for for loop
+            index *= -1;
+        }
+
+       // if removing head
+        if (index == 0){
+            head = curr.getNext();
+            size--;
+            return curr.datum;
+        }
+
+        //Traverse list up to node before index
+        for (int i = 0; curr != null && i < index - 1; i++) {
+            curr = curr.getNext();
+        }
+
+        //if index outside of range
+        if (curr == null || curr.getNext() == null)
+            return -1;
+
+        // store previous node to return node removed
+        prev = curr.getNext();
+
+        // update curr node's next pointer
+        curr.setNext(curr.getNext().getNext());
+        size--;
+        // put list back in proper order
+        if (negIndex) {
+            reverse();
+        }
+        return prev.datum;
     }
 
     /***
@@ -129,7 +240,22 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public void reverse() {
-
+        // set reference pointers
+        Node<E> prev  = null;
+        Node<E> curr = head;
+        Node<E> next = null;
+        //traverse list
+        while (curr != null){
+            // store next
+            next = curr.getNext();
+            // reverse next pointer of curr
+            curr.setNext(prev);
+            // step forward prev & curr
+            prev = curr;
+            curr = next;
+        }
+        // update header
+        head = prev;
     }
 
     /***
@@ -140,7 +266,36 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public Object set(int index, Object value) {
-        return null;
+        // set head ref pointer
+        Node<E> curr = head;
+        boolean negIndex = false;
+        // if negative index
+        if (index < 0)
+            negIndex = true;
+        // start from tail
+        if (negIndex) {
+            curr = tail;
+            // reverse list to traverse 'backwards'
+            reverse();
+            // get positive index for for loop
+            index *= -1;
+        }
+        // traverse list up to index
+        for (int i = 0; curr != null && i < index; i++) {
+            curr = curr.getNext();
+        }
+        // store curr value
+        Object prev = curr.datum;
+        // update datum
+        curr.datum = (E)value;
+
+        // put list back in proper order
+        if (negIndex) {
+            reverse();
+        }
+        // return prev value
+        return prev;
+
     }
 
     /***
@@ -149,7 +304,7 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /***
@@ -157,6 +312,28 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public void sort() {
+        
+    }
 
+    // helpers
+    public void printList(){
+        Node<E> curr = this.head;
+
+        System.out.print("Singly Linked List: ");
+
+        // traverse list
+        while(curr != null){
+            System.out.print(curr.getDatum() + " ");
+            curr = curr.getNext();
+        }
+        System.out.println();
+    }
+
+    public Object getHead(){
+        return head.getDatum();
+    }
+
+    public Object getTail(){
+        return tail.getDatum();
     }
 }

@@ -9,4 +9,23 @@
  */
 
 public class Driver {
+    public static void main(String[] args) {
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
+        SinglyLinkedList<Integer> newList = new SinglyLinkedList<>();
+
+
+        for (int i = 0; i < 5; i++){
+            newList.add(i);
+        }
+
+        list.add(10);
+        list.add(20);
+        list.add(30);
+        list.add(40);
+        list.add(10);
+        list.printList();
+        System.out.println(list.count(10));
+
+
+    }
 }
