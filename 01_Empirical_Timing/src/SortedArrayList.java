@@ -1,9 +1,8 @@
 /***
  Dynamic, array-backed data structure which adds
- elements in natural order and maintains proper
- capacity for number of elements to store.
-
- @author Ryan Young
+ elements in natural order and maintains propercapacity for number of elements to store.
+*
+* @author Ryan Young
  */
 
 import java.util.AbstractList;
@@ -11,7 +10,7 @@ public class SortedArrayList<E extends Comparable<E>> extends AbstractList<E> {
 
     private E[] data;
     private int size = 0;
-    public static final int CAP = 16;
+    public int CAP = 16;
 
     /***
      * Initializes generic array with capacity of 16.

@@ -21,6 +21,9 @@ public class SinglyLinkedList<E> implements List {
         public E getDatum(){
             return datum;
         }
+        public void setDatum(E d){
+            datum = d;
+        }
         public Node<E> getNext(){
             return next;
         }
@@ -34,28 +37,20 @@ public class SinglyLinkedList<E> implements List {
     private Node<E> tail = null;
     private int size = 0;
 
+    // constructors
     public SinglyLinkedList(){ }
-
     public SinglyLinkedList(List<E> list){
         this.add(list);
     }
 
-
-    /***
+      /***
      * Appends datum to end of list
      * @param datum to be added to list
      * @return true if successfully added
      */
     @Override
     public boolean add(Object datum) {
-        Node<E> newest = new Node(datum, null);
-        if (isEmpty())
-            head = newest;
-        else
-            tail.setNext(newest);
-        tail = newest;
-        size++;
-        return true;
+        return addLast(datum);
     }
 
     /***
@@ -147,29 +142,25 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public Object get(int index) {
+        // check if valid index
+        if (!validIndex(index))
+            return "Invalid Index";
+        // set ref pointer
         Node<E> curr = head;
-        boolean negIndex = false;
         // if negative index
-        if (index < 0)
-            negIndex = true;
-        // start from tail
-        if (negIndex) {
-            curr = tail;
-            // reverse list to traverse 'backwards'
-            reverse();
-            // get positive index for for loop
-            index *= -1;
+        if (index < 0){
+            // traverse list up to node at index before tail
+            for (int i = 0; curr != null && i < (size() + index) - 1; i++) {
+                curr = curr.getNext().getNext();
+            }
         }
-        //Traverse list up to node at index
-        for (int i = 0; curr != null && i < index; i++) {
-            curr = curr.getNext();
+        else {
+            //Traverse list up to node at index
+            for (int i = 0; curr != null && i < index; i++) {
+                curr = curr.getNext();
+            }
         }
-
-        // put list back in proper order
-        if (negIndex) {
-            reverse();
-        }
-        return curr;
+        return curr.getDatum();
     }
 
     /***
@@ -190,49 +181,38 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public Object remove(int index){
-       Node<E> curr = head;
-       Node<E> prev = null;
-
-        boolean negIndex = false;
-        // if negative index
-        if (index < 0)
-            negIndex = true;
-        // start from tail
-        if (negIndex) {
-            curr = tail;
-            // reverse list to traverse 'backwards'
-            reverse();
-            // get positive index for for loop
-            index *= -1;
-        }
-
+       // check if invalid index
+        if (!validIndex(index))
+            return "Invalid index, nothing removed";
+        // set reference pointers
+        Node<E> curr = head;
+        Node<E> prev = null;
        // if removing head
         if (index == 0){
             head = curr.getNext();
             size--;
-            return curr.datum;
+            return curr.getDatum();
         }
-
-        //Traverse list up to node before index
-        for (int i = 0; curr != null && i < index - 1; i++) {
-            curr = curr.getNext();
+        // if negative index
+        if (index < 0){
+            // traverse list up to node at index before tail
+            for (int i = 0; curr != null && i < (size() + index) - 1; i++) {
+                curr = curr.getNext();
+            }
+            prev = curr;
         }
-
-        //if index outside of range
-        if (curr == null || curr.getNext() == null)
-            return -1;
-
-        // store previous node to return node removed
-        prev = curr.getNext();
-
+        else {
+            //Traverse list up to node before index
+            for (int i = 0; curr != null && i < index - 1; i++) {
+                curr = curr.getNext();
+            }
+            // store previous node to return node removed
+            prev = curr.getNext();
+        }
         // update curr node's next pointer
         curr.setNext(curr.getNext().getNext());
         size--;
-        // put list back in proper order
-        if (negIndex) {
-            reverse();
-        }
-        return prev.datum;
+        return prev.getDatum();
     }
 
     /***
@@ -266,36 +246,30 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public Object set(int index, Object value) {
+        //check if valid index
+        if (!validIndex(index))
+            return "Invalid index";
         // set head ref pointer
         Node<E> curr = head;
-        boolean negIndex = false;
         // if negative index
-        if (index < 0)
-            negIndex = true;
-        // start from tail
-        if (negIndex) {
-            curr = tail;
-            // reverse list to traverse 'backwards'
-            reverse();
-            // get positive index for for loop
-            index *= -1;
+        if (index < 0){
+            // traverse list up to node at index before tail
+            for (int i = 0; curr != null && i < (size() + index) - 1; i++) {
+                curr = curr.getNext();
+            }
         }
-        // traverse list up to index
-        for (int i = 0; curr != null && i < index; i++) {
-            curr = curr.getNext();
+        else {
+            // traverse list up to index
+            for (int i = 0; curr != null && i < index; i++) {
+                curr = curr.getNext();
+            }
         }
         // store curr value
-        Object prev = curr.datum;
+        Object prev = curr.getDatum();
         // update datum
         curr.datum = (E)value;
-
-        // put list back in proper order
-        if (negIndex) {
-            reverse();
-        }
         // return prev value
         return prev;
-
     }
 
     /***
@@ -312,10 +286,38 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public void sort() {
-        
+        Node<E> curr = head;
+        Node<E> index = null;
+        Object temp;
+
+        while (curr != null){
+            index = curr.getNext();
+
+            while (index != null){
+                //if curr data > index data, swap data
+                if (((Comparable)curr.getDatum()).compareTo((Comparable)index.getDatum()) > 0){
+                    temp = curr.getDatum();
+                    curr.setDatum(index.getDatum());
+                    index.setDatum((E) temp);
+                }
+                index = index.getNext();
+            }
+            curr = curr.getNext();
+        }
     }
 
     // helpers
+    private boolean validIndex(int index){
+        // if negative index, change to positive value
+        if (index < 0)
+            index *= -1;
+
+        // check if index within bounds
+        if (index < size())
+            return true;
+        else return false;
+    }
+
     public void printList(){
         Node<E> curr = this.head;
 
@@ -327,13 +329,5 @@ public class SinglyLinkedList<E> implements List {
             curr = curr.getNext();
         }
         System.out.println();
-    }
-
-    public Object getHead(){
-        return head.getDatum();
-    }
-
-    public Object getTail(){
-        return tail.getDatum();
     }
 }
