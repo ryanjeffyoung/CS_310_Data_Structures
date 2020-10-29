@@ -15,15 +15,8 @@ public class Driver {
     private static final String FORMAT = "%-15s %-15s %-15s\n";
 
     public static void main(String[] args) {
-        List<Integer> myList = new SinglyLinkedList<>();
-        myList.add(10);
-        myList.add(20);
-        myList.add(30);
-
-
-        System.out.println(myList.get(-1));
-        System.out.println(myList.remove(-1));
-        myList.
+//        runTestSuite();
+        testRemoveNegative(80);
 
     }
 
@@ -156,8 +149,6 @@ public class Driver {
         }
         System.out.println();
     }
-
-    // is it at the other end?
     public static void testAddList(int listSize){
         System.out.println("__________________________");
         System.out.println("| Add List |");
@@ -173,13 +164,19 @@ public class Driver {
             newList.add(i);
         }
         int newSize = newList.size();
-        System.out.println("Original list size: " + originalSize);
-        System.out.println("Size of list to add: " + newSize);
+        System.out.println("Original list size: " + originalSize + " | " +
+                "Last element in original list: " + baseList.get((baseList.size())-1));
+        System.out.println("Size of list to add: " + newSize + " | " +
+                "Last element in new list: " + newList.get((newList.size())-1));
+        System.out.println("Combining lists...");
         baseList.add(newList);
         int finalSize = baseList.size();
-        System.out.println("Final size of original size: " + finalSize);
-    }
+        System.out.println("Final size of combined list: " + finalSize + " | " +
+                "Last element in combined list: " + baseList.get((baseList.size())-1));
+        System.out.println("Middle element in combined list (last element of original): " +
+                baseList.get(((baseList.size() - 1) / 2)));
 
+    }
     public static void testRemoveNegative(int listSize){
         System.out.println("__________________________");
         System.out.println("| Remove Negative Index |");

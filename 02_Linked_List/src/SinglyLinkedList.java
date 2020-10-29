@@ -181,38 +181,53 @@ public class SinglyLinkedList<E> implements List {
      */
     @Override
     public Object remove(int index){
-       // check if invalid index
-        if (!validIndex(index))
-            return "Invalid index, nothing removed";
         // set reference pointers
         Node<E> curr = head;
         Node<E> prev = null;
-       // if removing head
-        if (index == 0){
-            head = curr.getNext();
-            size--;
-            return curr.getDatum();
-        }
-        // if negative index
-        if (index < 0){
-            // traverse list up to node at index before tail
-            for (int i = 0; curr != null && i < (size() + index) - 1; i++) {
-                curr = curr.getNext();
+
+        // check if negative index
+        if (index < 0) {
+            // check if invalid index
+            if (!validNegIndex(index))
+                return "Invalid index, nothing removed";
+            // if removing -1 (tail)
+            if (index == -1){
+                return removeLast();
+            } // if removing -size (head)
+            else if (index == (size * -1)){
+                return removeFirst();
+            } // else removing middle node
+            else {
+                for (int i =0; i < (size() + index); i++){
+                    prev = curr;
+                    curr = curr.getNext();
+                }
+                prev.setNext(curr.getNext());
+                size--;
+                return curr.getDatum();
             }
-            prev = curr;
-        }
-        else {
-            //Traverse list up to node before index
-            for (int i = 0; curr != null && i < index - 1; i++) {
-                curr = curr.getNext();
+        } else {
+            // check if invalid index
+            if (!validIndex(index))
+                return "Invalid index, nothing removed";
+            // check if removing head
+            if (index == 0){
+                return removeFirst();
+            } // check if removing tail
+            else if (index == size -1){
+                return removeLast();
             }
-            // store previous node to return node removed
-            prev = curr.getNext();
+            // else removing middle node
+            else {
+                for (int i = 0; i < index; i++){
+                    prev = curr;
+                    curr = curr.getNext();
+                }
+                prev.setNext(curr.getNext());
+                size--;
+                return curr.getDatum();
+            }
         }
-        // update curr node's next pointer
-        curr.setNext(curr.getNext().getNext());
-        size--;
-        return prev.getDatum();
     }
 
     /***
@@ -307,6 +322,13 @@ public class SinglyLinkedList<E> implements List {
     }
 
     // helpers
+
+    /***
+     * Checks if given index
+     * exists within list
+     * @param index to check
+     * @return true if valid, else false
+     */
     private boolean validIndex(int index){
         // if negative index, change to positive value
         if (index < 0)
@@ -316,6 +338,58 @@ public class SinglyLinkedList<E> implements List {
         if (index < size())
             return true;
         else return false;
+    }
+
+    /***
+     * Checks if given negative index
+     * exists within list
+     * @param index to check
+     * @return true if valid, else false
+     */
+    private boolean validNegIndex(int index){
+        // if negative index, change to positive value
+        if (index < 0)
+            index *= -1;
+
+        // check if index within bounds
+        if (index <= size())
+            return true;
+        else return false;
+    }
+
+    /***
+     * Removes the last node in
+     * linked list. Updating tail
+     * node pointer as necessary.
+     * @return Datum of node removed.
+     */
+    private Object removeLast() {
+        // set pointers
+        Node<E> curr = head;
+        Node<E> prev = null;
+        while (curr.getNext() != null){
+            prev = curr;
+            curr = curr.getNext();
+        }
+        tail = prev;
+        prev.setNext(null);
+        size--;
+        return curr.getDatum();
+    }
+
+    /***
+     * Removes the first node in
+     * linked list. Updating head
+     * node pointer as necessary.
+     * @return Datum of node removed.
+     */
+    private Object removeFirst() {
+        Node<E> curr = head;
+        Node<E> prev = null;
+
+        head = curr.getNext();
+        size--;
+        return curr.getDatum();
     }
 
     public void printList(){
@@ -329,5 +403,12 @@ public class SinglyLinkedList<E> implements List {
             curr = curr.getNext();
         }
         System.out.println();
+    }
+
+    public E getHead() {
+        return head.getDatum();
+    }
+    public E getTail() {
+        return tail.getDatum();
     }
 }
