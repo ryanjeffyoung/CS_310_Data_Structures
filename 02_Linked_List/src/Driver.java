@@ -1,12 +1,14 @@
 /***
  * Driver to run tests and time performance
- * of SinglyLinkedList.
+ * of edu.sdsu.cs.datastructures.SinglyLinkedList.
  * Performs 6 increments for each method,
  * starting with defined size and doubling
  * for each increment.
  *
  * @author Ryan Young
  */
+import edu.sdsu.cs.datastructures.List;
+import edu.sdsu.cs.datastructures.SinglyLinkedList;
 
 public class Driver {
     private static final int INITIAL_TEST_SIZE = 500;
@@ -15,11 +17,12 @@ public class Driver {
     private static final String FORMAT = "%-15s %-15s %-15s\n";
 
     public static void main(String[] args) {
-//        runTestSuite();
-        testRemoveNegative(80);
-
+        runTestSuite();
     }
 
+    /***
+     * Runs all tests below
+     */
     public static void runTestSuite(){
         testAddFirst(5000, 6);
         testAddLast(5000, 6);
@@ -33,6 +36,13 @@ public class Driver {
         testReverseEmptyList();
     }
 
+    /***
+     * Adds element to front of list and times
+     * how long it takes. edu.sdsu.cs.datastructures.List size doubles each
+     * iteration.
+     * @param initialSize of list
+     * @param numRounds to add to list
+     */
     public static void testAddFirst(int initialSize, int numRounds){
         int n = initialSize;
         long prevTime = 0L;
@@ -60,6 +70,13 @@ public class Driver {
         }
         System.out.println();
     }
+    /***
+     * Adds element to end of list and times
+     * how long it takes. edu.sdsu.cs.datastructures.List size doubles each
+     * iteration.
+     * @param initialSize of list
+     * @param numRounds to add to list
+     */
     public static void testAddLast(int initialSize, int numRounds){
         int n = initialSize;
         long prevTime = 0L;
@@ -87,6 +104,13 @@ public class Driver {
         }
         System.out.println();
     }
+    /***
+     * Removes element from front of list and
+     * times how long it takes. edu.sdsu.cs.datastructures.List size doubles
+     * each iteration.
+     * @param initialSize of list
+     * @param numRounds to add to list
+     */
     public static void testRemoveFirst(int initialSize, int numRounds){
         int n = initialSize;
         long prevTime = 0L;
@@ -118,6 +142,13 @@ public class Driver {
         }
         System.out.println();
     }
+    /***
+     * Removes element from end of list and
+     * times how long it takes. edu.sdsu.cs.datastructures.List size doubles
+     * each iteration.
+     * @param initialSize of list
+     * @param numRounds to add to list
+     */
     public static void testRemoveLast(int initialSize, int numRounds){
         int n = initialSize;
         long prevTime = 0L;
@@ -149,9 +180,14 @@ public class Driver {
         }
         System.out.println();
     }
+    /***
+     * Adds a list to the end of an
+     * existing list
+     * @param listSize size of list to create
+     */
     public static void testAddList(int listSize){
         System.out.println("__________________________");
-        System.out.println("| Add List |");
+        System.out.println("| Add edu.sdsu.cs.datastructures.List |");
         System.out.println("--------------------------");
 
         List<Integer> baseList = new SinglyLinkedList<>();
@@ -177,6 +213,11 @@ public class Driver {
                 baseList.get(((baseList.size() - 1) / 2)));
 
     }
+    /***
+     * Removes an element from list using
+     * a negative index.
+     * @param listSize size of list to create
+     */
     public static void testRemoveNegative(int listSize){
         System.out.println("__________________________");
         System.out.println("| Remove Negative Index |");
@@ -185,30 +226,37 @@ public class Driver {
         for (int i = 0; i < listSize; i++){
             list.add(i);
         }
-        System.out.println("2nd to last element: " + list.get(list.size() - 2));
-        System.out.println("Removing 2nd to last element at index -1");
-        System.out.println("2nd to last element: " + list.remove(-1));
+        System.out.println("Last element: " + list.get(list.size() - 1));
+        System.out.println("Removing last element at index -1");
+        list.remove(-1);
+        System.out.println("Last element: " + list.get(list.size() - 1));
     }
-
+    /***
+     * Clears the list of all elements.
+     * @param listSize size of list to create
+     */
     public static void testClear(int listSize){
         System.out.println("__________________________");
-        System.out.println("| Clear List |");
+        System.out.println("| Clear edu.sdsu.cs.datastructures.List |");
         System.out.println("--------------------------");
         List<Integer> list = new SinglyLinkedList<>();
         for (int i = 0; i < listSize; i++){
             list.add(i);
         }
-        System.out.println("List size: " + list.size());
-        System.out.println("List cleared: " + list.isEmpty());
+        System.out.println("edu.sdsu.cs.datastructures.List size: " + list.size());
+        System.out.println("edu.sdsu.cs.datastructures.List cleared: " + list.isEmpty());
         System.out.println("Calling clear()...");
         list.clear();
-        System.out.println("List size: " + list.size());
-        System.out.println("List cleared: " + list.isEmpty());
+        System.out.println("edu.sdsu.cs.datastructures.List size: " + list.size());
+        System.out.println("edu.sdsu.cs.datastructures.List cleared: " + list.isEmpty());
     }
-
+    /***
+     * Sorts list in natural order
+     * @param listSize size of list to create
+     */
     public static void testSort(int listSize){
         System.out.println("__________________________");
-        System.out.println("| Sort List |");
+        System.out.println("| Sort edu.sdsu.cs.datastructures.List |");
         System.out.println("--------------------------");
         List<Integer> list = new SinglyLinkedList<>();
         for (int i = 0; i < listSize; i++){
@@ -222,33 +270,44 @@ public class Driver {
         list.sort();
         System.out.println("Sorted: " + isSorted(list));
     }
-    public static void testSet(int listSize, Object target){
+    /***
+     * Sets the value of a specified element
+     * @param listSize size of list to create
+     * @param newValue to set
+     */
+    public static void testSet(int listSize, Object newValue){
         System.out.println("__________________________");
-        System.out.println("| Set Element in List |");
+        System.out.println("| Set Element in edu.sdsu.cs.datastructures.List |");
         System.out.println("--------------------------");
         List<Integer> list = new SinglyLinkedList<>();
         for (int i = 0; i < listSize; i++){
             list.add(i);
         }
-        System.out.println("Count of " + target + ": " + list.count((Integer)target));
-        System.out.println("Setting element 1 to " + target);
-        list.set(1, (Integer)target);
-        System.out.println("Count of " + target + ": " + list.count((Integer)target));
+        System.out.println("Count of " + newValue + ": " + list.count((Integer)newValue));
+        System.out.println("Setting element 1 to " + newValue);
+        list.set(1, (Integer)newValue);
+        System.out.println("Count of " + newValue + ": " + list.count((Integer)newValue));
     }
-
+    /***
+     * Reverses an empty list.
+     */
     public static void testReverseEmptyList(){
         System.out.println("__________________________");
-        System.out.println("| Reverse Empty List |");
+        System.out.println("| Reverse Empty edu.sdsu.cs.datastructures.List |");
         System.out.println("--------------------------");
         List<Integer> list = new SinglyLinkedList<>();
         list.reverse();
     }
-
     // Utility methods
-    private static <E extends Comparable> boolean isSorted(List<E> listOfT) {
+    /***
+     * Checks if a list is sorted in
+     * natural ordering.
+     * @param list to check if sorted
+     */
+    private static <E extends Comparable> boolean isSorted(List<E> list) {
         E previous = null;
-        for (int i = 0; i < listOfT.size(); i++){
-            E curr = listOfT.get(i);
+        for (int i = 0; i < list.size(); i++){
+            E curr = list.get(i);
             if (previous != null && curr.compareTo(previous) < 0) return false;
             previous = curr;
         }

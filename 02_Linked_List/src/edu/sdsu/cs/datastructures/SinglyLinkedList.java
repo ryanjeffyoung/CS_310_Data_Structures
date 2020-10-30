@@ -1,5 +1,6 @@
+package edu.sdsu.cs.datastructures;
 /***
- * Implements List interface to provide
+ * Implements edu.sdsu.cs.datastructures.List interface to provide
  * singly linked list data structure.
  *
  * @author Ryan Young
@@ -141,10 +142,10 @@ public class SinglyLinkedList<E> implements List {
      * @return the element
      */
     @Override
-    public Object get(int index) {
+    public Object get(int index) throws IndexOutOfBoundsException{
         // check if valid index
         if (!validIndex(index))
-            return "Invalid Index";
+            throw new IndexOutOfBoundsException("Invalid index");
         // set ref pointer
         Node<E> curr = head;
         // if negative index
@@ -390,25 +391,5 @@ public class SinglyLinkedList<E> implements List {
         head = curr.getNext();
         size--;
         return curr.getDatum();
-    }
-
-    public void printList(){
-        Node<E> curr = this.head;
-
-        System.out.print("Singly Linked List: ");
-
-        // traverse list
-        while(curr != null){
-            System.out.print(curr.getDatum() + " ");
-            curr = curr.getNext();
-        }
-        System.out.println();
-    }
-
-    public E getHead() {
-        return head.getDatum();
-    }
-    public E getTail() {
-        return tail.getDatum();
     }
 }

@@ -1,6 +1,7 @@
+package edu.sdsu.cs.datastructures;
 /***
  * Interface containing methods
- *
+ * for a list
  * @author Ryan Young
  */
 
